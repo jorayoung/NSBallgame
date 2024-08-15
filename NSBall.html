@@ -1,0 +1,195 @@
+<html>
+<head>
+<title>NSBall game</title>
+<link rel="icon" href="newlogo.png" type="image/png">
+</head>
+<body bgcolor="41a64a" background="bggame.png">
+
+<h5 align="left" style="color:White"> Двигаться - UpArrow, DownArrow<h5>
+
+<img src="gates.jpg" width="135" height="900">
+
+<canvas id="game" width="1280" height="900"></canvas>
+<center>
+<a href="file:PLAY - hub.html"><button type="submit" class="submit-btn"><h2 style="color:White">В главное меню<h2></button></a>
+<button id="startBtn" class="submit-btn"><h2 style="color:White">Старт таймера<h2></button></a>
+<big><h1 id="timer" style="color: white">00:00:00</h1><big>
+<center>
+<script>
+function getRandomNumber(min, max) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min) + min)
+}
+
+let timer = document.getElementById('timer');
+let startBtn = document.getElementById('startBtn');
+
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+let interval;
+
+function updateTime() {
+  seconds++;
+  if (seconds === 60) {
+    minutes++;
+    seconds = 0;
+  }
+  if (minutes === 60) {
+    hours++;
+    minutes = 0;
+  }
+  timer.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+startBtn.addEventListener('click', () => {
+  interval = setInterval(updateTime, 1000);
+  startBtn.disabled = true;
+  resetBtn.disabled = false;
+});
+let POP_SOUND=new Audio('pop.mp3');
+POP_SOUND.volume=0.3;
+let FON_SOUND=new Audio('fon.mp3');
+FON_SOUND.volume=0.1; 
+let GOAL_SOUND=new Audio('goal.mp3');
+GOAL_SOUND.volume=0.1;
+var canvas = document.getElementById("game");
+var ctx = canvas.getContext("2d");
+function paddle(x, y, width, height) {
+this.x = x;
+this.y = y;
+this.width = width;
+this.height = height;
+this.speedModifier = 0;
+this.hasCollidedWith = function(ball) {
+var paddleLeftWall = this.x;
+var paddleRightWall = this.x + this.width;
+var paddleTopWall = this.y;
+var paddleBottomWall = this.y + this.height;
+if(ball.x > paddleLeftWall 
+&& ball.x < paddleRightWall
+&& ball.y > paddleTopWall
+&& ball.y < paddleBottomWall) {
+return true;
+}
+return false;
+};
+this.move = function(keyCode) {
+var nextY = this.y;
+if(keyCode == 40) {
+nextY += 5;
+this.speedModifer = 1.5;
+} else if(keyCode == 38) {
+nextY += -5;
+this.speedModifier = 1.5;
+} else {
+this.speedModifier = 0;
+}
+nextY = nextY < 0 ? 0 : nextY;
+nextY = nextY + this.height > 900 ? 900 - this.height : nextY;
+this.y = nextY;
+};
+}
+var player = new paddle (25, 50, 30, 30);
+var ai = new paddle (1200, 5213, 30, 30);
+var ball = { x: 400, y: 350, radius: 10, xSpeed: 7, ySpeed: 0,
+reverseX: function() {
+this.xSpeed *= -1;
+},
+reverseY: function() {
+this.ySpeed *= -1;
+},
+reset: function () {
+this.x = 400;
+this.y = 300;
+this.xSpeed = getRandomNumber(4, 9);
+this.ySpeed = getRandomNumber(-2,4);
+},
+isBouncing: function() {
+return ball.ySpeed != 0;
+},
+modifyXSpeedBy: function(modification) {
+modification = this.xSpeed < 0 ? modification * -1 : modification;
+var nextValue = this.xSpeed + modification;
+nextValue = Math.abs(nextValue) > 9 ? 9 : nextValue;
+this.xSpeed = nextValue;
+},
+modifyYSpeedBy: function(modification) {
+modification = this.ySpeed < 0 ? modification * -1 : modification;
+this.ySpeed += modification;
+}
+};
+function tick() {
+updateGame();
+draw()
+window.setTimeout("tick()", 1000/60);
+FON_SOUND.play(); 
+}
+function updateGame() {
+ball.x += ball.xSpeed;
+ball.y += ball.ySpeed;
+if(ball.x < 0 || ball.x > 1280) {
+ball.reset();
+GOAL_SOUND.play(); 
+}
+if(ball.y <= 0 || ball.y >= 900) {
+ball.reverseY();
+POP_SOUND.play(); 
+}
+var collidedWithPlayer = player.hasCollidedWith(ball);
+var collidedWithAi = ai.hasCollidedWith(ball);
+if(collidedWithPlayer || collidedWithAi) {
+ball.reverseX();
+ball.modifyXSpeedBy(0.25);
+POP_SOUND.play(); 
+var speedUpValue = collidedWithPlayer ? player.speedModifier : ai.speedModifier;
+ball.modifyYSpeedBy(speedUpValue);
+}
+for(var keyCode in heldDown) {
+player.move(keyCode);
+}
+var aiMiddle = ai.y + (ai.height / 2);
+if(aiMiddle < ball.y) {
+ai.move(40);
+}
+if(aiMiddle > ball.y) {
+ai.move(38);
+}
+
+}
+function draw() {
+ctx.fillStyle = "#41a64a";
+ctx.fillRect(0, 0, 1280, 900);
+renderPaddle(player);
+renderPaddle(ai);
+renderBall(ball);
+}
+function renderPaddle(paddle) {
+ctx.fillStyle = "black";
+ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+}
+function renderBall(ball) {
+ctx.beginPath();
+ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI, false);
+ctx.fillStyle = "white";
+ctx.fill();
+}
+var heldDown = {};
+window.addEventListener("keydown", function(keyInfo) { heldDown[event.keyCode] = true; }, false);window.addEventListener("keyup", function(keyInfo) { delete heldDown[event.keyCode]; }, false);
+tick();
+</script>
+
+<body>
+
+<style>
+button {
+background: #41a64a;
+border: 10px solid #ffffff;
+width: 500px;
+height: 80px;
+border-radius: 100px;
+}
+</style>
+
+</body>
+</html>
