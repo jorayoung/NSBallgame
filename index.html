@@ -20,20 +20,22 @@
 button {
 background: #41a64a;
 border: 10px solid #ffffff;
-width: 500px;
+width: 450px;
 height: 80px;
 border-radius: 100px;
 }
 </style>
 
 
-<a href="https://jorayoung.github.io/dopcontentnsball/ "><button type="submit" class="submit-btn"><h2 style="color:White">Играть<h2></button></a>
+<a href="file:NSBall.html"><button type="submit" class="submit-btn"><h2 style="color:White">Играть<h2></button></a>
 <h3> <h3>
-<a href="https://jorayoung.github.io/dopcontentcontrols/"><button type="submit" class="submit-btn"><h2 style="color:White">Официальный турнир<h2></button></a>
+<a href="file:skin.html"><button type="submit" class="submit-btn"><h2 style="color:White">Выбор персонажа<h2></button></a>
 <h3> <h3>
-<a href="https://jorayoung.github.io/dopcontentupdate/"><button type="submit" class="submit-btn"><h2 style="color:White">О нас<h2></button></a>
+<a href="file:league.html"><button type="submit" class="submit-btn"><h2 style="color:White">Официальный турнир<h2></button></a>
 <h3> <h3>
-<a href="https://jorayoung.github.io/dopcontentimportantlink/"><button type="submit" class="submit-btn"><h2 style="color:White">Важные ссылки<h2></button></a>
+<a href="file:updates.html"><button type="submit" class="submit-btn"><h2 style="color:White">О нас<h2></button></a>
+<h3> <h3>
+<a href="file:importantlinks.html"><button type="submit" class="submit-btn"><h2 style="color:White">Важные ссылки<h2></button></a>
 
 
 <strong><h6 style="color:white">© Все права принадлежат владельцу проекта - Jora young</h6><strong>
@@ -42,4 +44,25 @@ border-radius: 100px;
 
 </center>
 </body>
+<body>
+<body oncontextmenu="return false;">
+<script>
+document.onkeydown = function(e) {
+if(event.keyCode == 123) {
+return false;
+}
+if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+return false;
+}
+}
+</script>
 </html>
