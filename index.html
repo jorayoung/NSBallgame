@@ -1,219 +1,52 @@
 <html>
 <head>
-<title>NSBall game</title>
+<title>Главное меню</title>
 <link rel="icon" href="newlogo.png" type="image/png">
+<script defer src="index.txt"></script>
+<link rel="stylesheet" href="styles.txt" />
 </head>
-<body bgcolor="41a64a" background="bggame.png">
+<body bgcolor="41a64a" background="bg.jpg">
+
 <center>
-<div class="scoreboard">
-  <img src="redscore.png" class="rectangle">
-  <big><div id="red_score" class="red_score">0</div></big>
-  <big><div id="tire" class="tire">-</div></big>
-  <big><div id="blue_score" class="blue_score">0</div></big>
-  <img src="bluescore.png" class="rectangle">
-  <big><div id="timer" class="timer">00:00</div></big>
-  <img type="submit" src="volume_on.png" class="btn_btn-success1" id="submit_volume_onoff" onclick="volumeONOFF()"></button>
-  <img type="submit" src="music_on.png" class="btn_btn-success2" id="submit_music_onoff" onclick="musicONOFF()"></button>
-  <img type="submit" src="pause_on.png" class="btn_btn-success3" id="submit_pause_onoff" onclick="pauseONOFF()"></button>
-</div>
+
+<img src="head.png" width="1575" height="300">
+
+
+<strong><h2 align="left" style="color:white"><div>Количество посещений игры:</div><strong>
+<div class="website-counter"></div><h2>
+
+<center>
+<style>
+button {
+background: #41a64a;
+border: 10px solid #ffffff;
+width: 450px;
+height: 80px;
+border-radius: 100px;
+}
+</style>
+
+
+<a href="https://jorayoung.github.io/dopcontentnsball/"><button type="submit" class="submit-btn"><h2 style="color:White">Играть<h2></button></a>
+<h3> <h3>
+<a href="https://jorayoung.github.io/dopskin/"><button type="submit" class="submit-btn"><h2 style="color:White">Выбор персонажа<h2></button></a>
+<h3> <h3>
+<a href="https://jorayoung.github.io/dopcontentcontrols/"><button type="submit" class="submit-btn"><h2 style="color:White">Официальный турнир<h2></button></a>
+<h3> <h3>
+<a href="https://jorayoung.github.io/dopcontentupdate/"><button type="submit" class="submit-btn"><h2 style="color:White">О нас<h2></button></a>
+<h3> <h3>
+<a href="https://jorayoung.github.io/dopcontentimportantlink/"><button type="submit" class="submit-btn"><h2 style="color:White">Важные ссылки<h2></button></a>
+
+
+<strong><h6 style="color:white">© Все права принадлежат владельцу проекта - Jora young</h6><strong>
+<strong><h6 style="color:white">NSBall 2024 Russia</h6><strong>
+
+
 </center>
-<img src="gates.jpg" width="135" height="900">
-
-<canvas id="game" width="1280" height="900"></canvas>
-<center>
-<a href="https://jorayoung.github.io/NSBallgame/"><button type="submit" class="submit-btn"><h2 style="color:White">В главное меню<h2></button></a>
-<a href="https://jorayoung.github.io/dopcontentnsball/"><button type="submit" class="submit-btn"><h2 style="color:White">Начать заново<h2></button></a>
-<center>
+</body>
+<body>
+<body oncontextmenu="return false;">
 <script>
-let FIFTY_TWO=new Audio('52.mp3');
-FIFTY_TWO.volume=0.5;
-function getRandomNumber(min, max) {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min) + min)
-}
-
-let timer = document.getElementById('timer');
-
-let seconds = 0;
-let minutes = 0;
-let hours = 0;
-let interval;
-
-var pauseState=false;
-
-function updateTime() {
-  if(!pauseState){
-  seconds++;
-  if (seconds === 60) {
-    minutes++;
-    seconds = 0;
-  }
-  if (minutes === 52) {
-    FIFTY_TWO.play();
-    setTimeout(()=>{ FIFTY_TWO.volume=0.0; }, FIFTY_TWO.duration * 1000)
-  }
-  timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-} else{
-  timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} (PAUSE)`;
-}
-}
-window.addEventListener('load', () => {
-  interval = setInterval(updateTime, 1000); // Бро, зачем ты лазишь по нашему коду?
-});
-let POP_SOUND=new Audio('pop.mp3');
-POP_SOUND.volume=0.3;
-let FON_SOUND=new Audio('fon.mp3');
-FON_SOUND.volume=0.1; 
-let GOAL_SOUND=new Audio('goal.mp3');
-GOAL_SOUND.volume=0.1;
-var canvas = document.getElementById("game");
-var ctx = canvas.getContext("2d");
-function paddle(x, y, width, height, image) {
-this.x = x;
-this.y = y;
-this.width = width;
-this.height = height;
-this.image = new Image(this.width, this.height);
-this.image.src = image;
-this.speedModifier = 0;
-this.hasCollidedWith = function(ball) {
-var paddleLeftWall = this.x;
-var paddleRightWall = this.x + this.width;
-var paddleTopWall = this.y;
-var paddleBottomWall = this.y + this.height;
-if(ball.x > paddleLeftWall 
-&& ball.x < paddleRightWall
-&& ball.y > paddleTopWall
-&& ball.y < paddleBottomWall) {
-return true;
-}
-return false;
-};
-this.move = function(keyCode) {
-var nextY = this.y;
-if(keyCode == 40) {
-nextY += 5;
-this.speedModifer = 1.5;
-} else if(keyCode == 38) {
-nextY += -5;
-this.speedModifier = 1.5;
-} else {
-this.speedModifier = 0;
-}
-nextY = nextY < 0 ? 0 : nextY;
-nextY = nextY + this.height > 900 ? 900 - this.height : nextY;
-this.y = nextY;
-};
-}
-if (!localStorage.getItem("character")){
-    localStorage.setItem("character","character1.png");
-}
-var player = new paddle (25, 350, 30, 30, localStorage.getItem('character'))
-var ai = new paddle (1200, 350, 30, 30, "character2.png")
-var ball = { x: 400, y: 350, radius: 10, xSpeed: getRandomNumber(4,9), ySpeed: getRandomNumber(-2,4),
-reverseX: function() {
-this.xSpeed *= -1;
-},
-reverseY: function() {
-this.ySpeed *= -1;
-},
-reset: function () {
-this.x = 400;
-this.y = 300;
-this.xSpeed = getRandomNumber(4, 9);
-this.ySpeed = getRandomNumber(-2,4);
-},
-isBouncing: function() {
-return ball.ySpeed != 0;
-},
-modifyXSpeedBy: function(modification) {
-modification = this.xSpeed < 0 ? modification * -1 : modification; 
-var nextValue = this.xSpeed + modification;
-nextValue = Math.abs(nextValue) > 9 ? 9 : nextValue;
-this.xSpeed = nextValue;
-},
-modifyYSpeedBy: function(modification) {
-modification = this.ySpeed < 0 ? modification * -1 : modification;
-this.ySpeed += modification;
-}
-};
-function tick() {
-if (!pauseState){
-  draw();
-  FON_SOUND.play(); 
-}
-updateGame();
-window.setTimeout("tick()", 1000/60);
-}
-function updateGame() {
-if (!pauseState){
-ball.x += ball.xSpeed;
-ball.y += ball.ySpeed;
-if(ball.x > 1280) { 
-  ball.reset();
-  GOAL_SOUND.play();
-  document.getElementById("red_score").innerHTML = +document.getElementById("red_score").innerHTML + +parseInt(1);
-} 
-if(ball.x < 0) {
-  ball.reset();
-  GOAL_SOUND.play();
-  document.getElementById("blue_score").innerHTML = +document.getElementById("blue_score").innerHTML + +parseInt(1);
-}
-if (document.getElementById("red_score").innerHTML==5 && document.getElementById("blue_score").innerHTML==2){
-  FIFTY_TWO.play();
-  setTimeout(()=>{ FIFTY_TWO.volume=0.0;}, FIFTY_TWO.duration * 1000)
-}
-if(ball.y <= 0 || ball.y >= 900) {
-ball.reverseY();
-POP_SOUND.play(); 
-}
-var collidedWithPlayer = player.hasCollidedWith(ball);
-var collidedWithAi = ai.hasCollidedWith(ball);
-if(collidedWithPlayer || collidedWithAi) {
-ball.reverseX();
-ball.modifyXSpeedBy(0.25);
-POP_SOUND.play(); 
-var speedUpValue = collidedWithPlayer ? player.speedModifier : ai.speedModifier;
-ball.modifyYSpeedBy(speedUpValue);
-}
-}
-for(var keyCode in heldDown) {
-if (keyCode==80){
-  pauseState=!pauseState;
-} else if(!pauseState){
-  player.move(keyCode);
-}
-}
-if(!pauseState){
-var aiMiddle = ai.y + (ai.height / 2);
-if(aiMiddle < ball.y) {
-ai.move(40);
-}
-if(aiMiddle > ball.y) {
-ai.move(38);
-}
-}
-}
-function draw() {
-ctx.fillStyle = "#41a64a";
-ctx.fillRect(0, 0, 1280, 900);
-renderPaddle(player);
-renderPaddle(ai);
-renderBall(ball); 
-}
-function renderPaddle(paddle) {
-ctx.drawImage(paddle.image, paddle.x, paddle.y)
-}
-function renderBall(ball) {
-ctx.beginPath();
-ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI, false);
-ctx.fillStyle = "white";
-ctx.fill();
-}
-var heldDown = {}; 
-window.addEventListener("keydown", function(keyInfo) { heldDown[event.keyCode] = true; }, false);window.addEventListener("keyup", function(keyInfo) { delete heldDown[event.keyCode]; }, false);
-tick(); // Чесдес съеби отсюда нахуй уеба, не играйся с нашим кодом и читы не делай ишачина
 document.onkeydown = function(e) {
 if(event.keyCode == 123) {
 return false;
@@ -231,109 +64,5 @@ if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
 return false;
 }
 }
-var flag=1;
-document.querySelector('#submit_volume_onoff').onclick=function volumeONOFF(){
-  if (flag==1){
-    POP_SOUND.volume=0.0; 
-    GOAL_SOUND.volume=0.0;
-    FIFTY_TWO.volume=0.0;
-    FON_SOUND.volume=0.0;
-    document.getElementById("submit_volume_onoff").src="volume_off.png";
-    flag=2;
-  }else{
-    POP_SOUND.volume=0.3;
-    GOAL_SOUND.volume=0.1;
-    FON_SOUND.volume=0.1;
-    FIFTY_TWO.volume=0.5;
-    document.getElementById("submit_volume_onoff").src="volume_on.png";
-    flag=1;
-  }
-}
-var flag2=1;
-document.querySelector('#submit_music_onoff').onclick=function musicONOFF(){
-  if (flag2==1){
-    FON_SOUND.volume=0.0;
-    document.getElementById("submit_music_onoff").src="music_off.png";
-    flag2=2;
-  } else{
-    FON_SOUND.volume=0.1;
-    document.getElementById("submit_music_onoff").src="music_on.png";
-    flag2=1;
-  }
-}
-document.querySelector('#submit_pause_onoff').onclick=function pauseONOFF(){
-  pauseState=!pauseState
-  if (pauseState){
-    document.getElementById("submit_pause_onoff").src="pause_off.png";
-  } else{
-    document.getElementById("submit_pause_onoff").src="pause_on.png";
-  }
-}
 </script>
-
-<body>
-<body oncontextmenu="return false;">
-<style>
-button {
-background: #41a64a;
-border: 10px solid #ffffff;
-width: 500px; 
-height: 80px;
-border-radius: 100px;
-font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-#red_score{
-  display: inline-block;
-  color: white;
-  font-size: 32px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-#tire{
-  display: inline-block;
-  color: white;
-  font-size: 32px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-#blue_score{
-  display: inline-block;
-  color: white;
-  font-size: 32px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-#timer{
-  display: inline-block;
-  color: white;
-  font-size: 32px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
-  margin-left: 113px;
-}
-.btn_btn-success1 {
-  color: white;
-  width: 30px;
-  height: 30px;
-  border: 2px solid #ffffff;
-  background-size: cover;
-  margin-left: 113px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-.btn_btn-success2{
-  color: white;
-  width: 30px;
-  height: 30px;
-  border: 2px solid #ffffff;
-  background-size: cover;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-.btn_btn-success3{
-  color: white;
-  width: 30px;
-  height: 30px;
-  border: 2px solid #ffffff;
-  background-size: cover;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-</style>
-</body>
 </html>
