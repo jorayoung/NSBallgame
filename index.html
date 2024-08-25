@@ -12,8 +12,8 @@
 <img src="head.png" width="1575" height="300">
 
 
-<strong><h2 align="left" style="color:white"><div>Количество посещений игры:</div><strong>
-<div class="website-counter"></div><h2>
+<strong><h2 align="left" style="color:white"><div>Количество посещений игры:</div></align></strong>
+<div class="website-counter"></div>
 
 <center>
 <style>
@@ -23,6 +23,30 @@ border: 10px solid #ffffff;
 width: 450px;
 height: 80px;
 border-radius: 100px;
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+font-size: 14px;
+margin-bottom:0px;
+}
+button:hover{cursor: pointer;}
+body,
+.website-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.website-counter {
+  background-color: #41a64a;
+  border: 5px solid #ffffff;
+  height: 50px;
+  width: 80px;
+  color: white;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 25px;
+  margin-top: 10px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 </style>
 
@@ -38,8 +62,8 @@ border-radius: 100px;
 <a href="https://jorayoung.github.io/dopcontentimportantlink/"><button type="submit" class="submit-btn"><h2 style="color:White">Важные ссылки<h2></button></a>
 
 
-<strong><h6 style="color:white">© Все права принадлежат владельцу проекта - Jora young</h6><strong>
-<strong><h6 style="color:white">NSBall 2024 Russia</h6><strong>
+<strong><h6 style="color:white" class="footer">© Все права принадлежат владельцу проекта - Jora young</h6><strong>
+<strong><h6 style="color:white" class="footer">NSBall 2024 Russia</h6><strong>
 
 
 </center>
@@ -47,6 +71,18 @@ border-radius: 100px;
 <body>
 <body oncontextmenu="return false;">
 <script>
+var counterContainer = document.querySelector(".website-counter");
+var resetButton = document.querySelector("#reset");
+var visitCount = localStorage.getItem("page_view");
+if (visitCount) {
+  visitCount = Number(visitCount) + 1;
+  localStorage.setItem("page_view", visitCount);
+} else {
+  visitCount = 1;
+  localStorage.setItem("page_view", 1);
+}
+counterContainer.innerHTML = visitCount;
+
 document.onkeydown = function(e) {
 if(event.keyCode == 123) {
 return false;
