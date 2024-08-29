@@ -61,49 +61,6 @@ body,
 <h3> <h3>
 <a href="https://jorayoung.github.io/dopcontentimportantlink/"><button type="submit" class="submit-btn"><h2 style="color:White">Важные ссылки<h2></button></a>
 
-<h3> <h3>ㅤ
-
-<!-- Ниже чат -->
-<center>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" ></script>
-<script type="text/javascript" src="https://comet-server.ru/CometServerApi.js" ></script>
-<script type="text/javascript" src="https://comet-server.ru/doc/html_chat.js" ></script>
-<link rel="stylesheet" type="text/css" href="https://comet-server.ru/doc/html_chat.css"></link>
-
-<!-- Осталось настроить сам чат и запустить, для этого пишем небольшой скрипт. -->
-<div id="html-chat"></div>
-<style>
-/* Здесь настроим css стили для чата*/
-.holder-html-chat{ border: 1px solid #ccc;padding:10px;background-color: #41a64a;width: 650px;}
-.html-chat-history{ max-width: 600px; overflow: auto;max-height: 180px; border: 2px solid #ccc;padding: 30px;}
-.html-chat-js-name{ margin-top:10px; }
-.html-chat-js-input{ max-width: 600px;max-height: 100px;width: 600px;margin-top:10px; }
-.html-chat-js-button-holder{ margin-bottom: 1px;margin-top: 10px; }
-.html-chat-js-button-holder input{ width: 220px; }
-.html-chat-js-answer{ float:right; }
-.html-chat-js-answer a{ color: #41a64a;font-size: 1px; font-family: cursive;}
-.html-chat-js-answer a:hover{ color: #41a64a;font-size: 12px; font-family: Franklin Gothic Medium;}
-.html-chat-msg{ margin: 0px; }
-</style>
-
-<script>
-
-   /**
-    * Чат работает на comet-server.ru
-    * По любым вопросам обращайтесь support@comet-server.ru или на сайт comet-server.ru
-    */
-    $(document).ready(function()
-    {
-       // Запуск api комет сервера
-       CometServer().start({dev_id: 4049 }) // Идентификатор разработчика на comet-server.ru
-
-       // Запуск чата. Передаём ему элемент в котором надо создать окно чата.
-       htmljs_Chat_Init( $("#html-chat") )
-    });
-</script>
-</center>
-<!-- Выше чат -->
-
   
 <strong><h6 style="color:white" class="footer">© Все права принадлежат владельцу проекта - Jora young</h6><strong>
 <strong><h6 style="color:white" class="footer">NSBall 2024 Russia</h6><strong>
