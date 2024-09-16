@@ -11,6 +11,58 @@
 
 <img src="head.png" width="1575" height="300">
 
+<!-- Ниже бегущая строка -->
+
+<style>
+    .marquee {
+        display: block;
+        background-color: #41a64a;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        color:#ffffff;
+       
+        top: 50px;
+        z-index: 999;
+        font-weight: 500;
+        border-bottom: #343a40 2px solid;
+        font-family: 'Franklin Gothic Medium';
+    }
+
+    .marquee span {
+        display: inline-block;
+        padding-left: 100%;
+        -webkit-animation: scroll 15s infinite linear;
+        -moz-animation: scroll 15s infinite linear;
+        animation: scroll 15s infinite linear;
+        font-family: 'Franklin Gothic Medium';
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translate(0, 0);
+        }
+        100% {
+            transform: translate(-100%, 0)
+        }
+    }
+
+    .marquee .match-link {
+        color: #08102c;
+        text-decoration: none;
+    }
+</style>
+
+<div class="marquee">
+        <span>            
+Результаты сезона: <input type="image" src="gold.png" width="15" height="15"/> Twistzz <input type="image" src="silver.png" width="15" height="15"/> zvezzda <input type="image" src="bronze.png" width="15" height="15"/> elsuso
+| Регистрация на новый сезон скоро откроется, переходи в наш дискорд сервер, там можно узнать подробнее - https://discord.com/invite/2WS7E6W4vJ
+           
+        </span>
+    </div>
+
+
+<!-- Выше бегущая строка -->
 
 <strong><h2 align="left" style="color:white"><div>Количество посещений игры:</div></align></strong>
 <div class="website-counter"></div>
@@ -61,11 +113,51 @@ body,
 <h3> <h3>
 <a href="https://jorayoung.github.io/dopcontentimportantlink/"><button type="submit" class="submit-btn"><h2 style="color:White">Важные ссылки<h2></button></a>
 
-  
+<h3>  <h3>ㅤ
+
+<!-- Ниже чат -->
+<center>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" ></script>
+<script type="text/javascript" src="https://comet-server.ru/CometServerApi.js" ></script>
+<script type="text/javascript" src="https://comet-server.ru/doc/html_chat.js" ></script>
+<link rel="stylesheet" type="text/css" href="https://comet-server.ru/doc/html_chat.css"></link>
+
+<div id="html-chat"></div>
+<style>
+/* Здесь настроим css стили для чата*/
+.holder-html-chat{ border: 1px solid #ccc;padding:10px;background-color: #41a64a;width: 420px;}
+.html-chat-history{ max-width: 380px; overflow: auto;max-height: 180px; border: 2px solid #ccc;padding: 30px;}
+.html-chat-js-name{ margin-top:10px; }
+.html-chat-js-input{ max-width: 380px;max-height: 100px;width: 380px;margin-top:20px; }
+.html-chat-js-button-holder{ margin-bottom: 1px;margin-top: 10px;}
+.html-chat-js-button-holder input{ width: 220px; background: #41a64a; border: 6px solid #ffffff; width: 250px; font-family: 'Franklin Gothic Medium'; border-radius: 100px; color:#ffffff}
+.html-chat-js-answer{ float:right; }
+.html-chat-js-answer a{ color: #41a64a;font-size: 1px; font-family: cursive;}
+.html-chat-js-answer a:hover{ color: #41a64a;font-size: 12px; font-family: 'Franklin Gothic Medium';}
+.html-chat-msg{ margin: 0px; font-size: 20px; font-family: 'Franklin Gothic Medium';}
+</style>
+
+<script>
+
+   /**
+    * Чат работает на comet-server.ru
+    * По любым вопросам обращайтесь support@comet-server.ru или на сайт comet-server.ru
+    */
+    $(document).ready(function()
+    {
+       // Запуск api комет сервера
+       CometServer().start({dev_id: 4049 }) // Идентификатор разработчика на comet-server.ru
+
+       // Запуск чата. Передаём ему элемент в котором надо создать окно чата.
+       htmljs_Chat_Init( $("#html-chat") )
+    });
+</script>
+</center>
+<!-- Выше чат -->
+
 <strong><h6 style="color:white" class="footer">© Все права принадлежат владельцу проекта - Jora young</h6><strong>
 <strong><h6 style="color:white" class="footer">NSBall 2024 Russia</h6><strong>
-<strong><h6 style="color:white" class="footer">v2.4</h6><strong>
-
+<strong><h6 style="color:white" class="footer">v3.0</h6><strong>
 
 </center>
 </body>
